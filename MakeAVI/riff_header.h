@@ -4,25 +4,37 @@
 #include <variant>
 #include <vector>
 
+
 using WORD = uint16_t;
 using DWORD = uint32_t;
+using UINT = unsigned int;
 using BYTE = unsigned char;
-using UINT = uint32_t;
-using FOURCC = uint32_t;
+using FOURCC = DWORD;
 struct Chunk;
 struct List;
 
 using List_or_Chunk = std::variant<Chunk*, List*>;
-#define FCC(x) \
-    ((((DWORD)(x) & 0x000000FF) << 24) | (((DWORD)(x) & 0x0000FF00) << 8) | \
-    (((DWORD)(x) & 0x00FF0000) >> 8) | (((DWORD)(x) && 0xFF000000) >> 24))
+
+
+constexpr auto ckidSTREAMLIST = 0x6C727473;
+constexpr auto ckidSTREAMHEADER = 0x68727473;
+constexpr auto ckidVID = 0x73646976;
+constexpr auto ckidMJPG2 = 0x67706A6D;
+constexpr auto ckidMAINAVIHEADER = 0x68697661;
+constexpr auto ckidHDRLHeader = 0x6C726468;
+constexpr auto ckidMovi = 0x63643030;	// 00dc
+constexpr auto chidMOVIHEADER = 0x69766F6D;		// movi
+constexpr auto ckidRIFF = 0x46464952;		// RIFF
+constexpr auto ckidLIST = 0x5453494c;		// LIST
+constexpr auto ckidAVI = 0x20495641;		// AVI 
+constexpr auto ckidMJPG = 0x47504A4D;
+constexpr auto ckidSTRF = 0x66727473;
 
 #pragma pack(push, 1)
 struct Chunk
 {
 	FOURCC	ckID = 0;
 	UINT	ckSize = 0;
-	BYTE*	ckData = nullptr;
 };
 
 struct List
@@ -30,12 +42,12 @@ struct List
 	FOURCC	fcc;
 	UINT	listSize = 0;
 	FOURCC	listType = 0;
-	std::vector<List_or_Chunk> listData;
 };
 
 
 /* AVI Main header */
-struct AVIMAINHEADER {
+struct AVIMAINHEADER 
+{
 	FOURCC fcc;	// avih
 	DWORD  cb;
 	DWORD  dwMicroSecPerFrame;
@@ -52,7 +64,8 @@ struct AVIMAINHEADER {
 };
 
 /* AVI stream header */
-struct AVISTREAMHEADER {
+struct AVISTREAMHEADER 
+{
 	FOURCC  fcc; // strh
 	DWORD   cb;
 	FOURCC  fccType;
@@ -76,8 +89,8 @@ struct AVISTREAMHEADER {
 		short   right;
 		short   bottom;
 	};
-} ;
-
+	rcFrame frame;
+};
 
 struct BITMAPINFOHEADER
 {
@@ -87,7 +100,6 @@ struct BITMAPINFOHEADER
 	WORD	bi_planes;
 	WORD	bi_bit_count;
 	DWORD	bi_compression;
-	DWORD	bi_size_image;
 	DWORD	bi_size_image;
 	DWORD	bi_x_pels_per_meter;
 	DWORD	bi_y_pels_per_meter;
@@ -109,9 +121,7 @@ struct WAVEFORMATEX
 struct RIFF_Header
 {
 	FOURCC	fcc;
-	FOURCC	ckID;
 	UINT	fileSize = 0;
 	FOURCC	fileType = 0;
-	std::vector<List_or_Chunk> data;
 };
 #pragma pack(pop)
