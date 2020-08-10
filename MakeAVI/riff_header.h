@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdint.h>
-#include <variant>
 #include <vector>
 
 
@@ -10,25 +9,21 @@ using DWORD = uint32_t;
 using UINT = unsigned int;
 using BYTE = unsigned char;
 using FOURCC = DWORD;
-struct Chunk;
-struct List;
-
-using List_or_Chunk = std::variant<Chunk*, List*>;
 
 
-constexpr auto ckidSTREAMLIST = 0x6C727473;
-constexpr auto ckidSTREAMHEADER = 0x68727473;
-constexpr auto ckidVID = 0x73646976;
-constexpr auto ckidMJPG2 = 0x67706A6D;
-constexpr auto ckidMAINAVIHEADER = 0x68697661;
-constexpr auto ckidHDRLHeader = 0x6C726468;
-constexpr auto ckidMovi = 0x63643030;	// 00dc
-constexpr auto chidMOVIHEADER = 0x69766F6D;		// movi
-constexpr auto ckidRIFF = 0x46464952;		// RIFF
-constexpr auto ckidLIST = 0x5453494c;		// LIST
-constexpr auto ckidAVI = 0x20495641;		// AVI 
-constexpr auto ckidMJPG = 0x47504A4D;
-constexpr auto ckidSTRF = 0x66727473;
+constexpr auto ckidSTREAMLIST			= 0x6C727473;
+constexpr auto ckidSTREAMHEADER			= 0x68727473;
+constexpr auto ckidVID					= 0x73646976;
+constexpr auto ckidMJPG2				= 0x67706A6D;
+constexpr auto ckidMAINAVIHEADER		= 0x68697661;
+constexpr auto ckidHDRLHeader			= 0x6C726468;
+constexpr auto ckidMovi					= 0x63643030; // 00dc
+constexpr auto chidMOVIHEADER			= 0x69766F6D; // movi
+constexpr auto ckidRIFF					= 0x46464952; // RIFF
+constexpr auto ckidLIST					= 0x5453494c; // LIST
+constexpr auto ckidAVI					= 0x20495641; // AVI 
+constexpr auto ckidMJPG					= 0x47504A4D;
+constexpr auto ckidSTRF					= 0x66727473;
 
 #pragma pack(push, 1)
 struct Chunk

@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 		1000000,	// dwrate
 		0, total_frame, 16777216,
 		10000, 0,
-		0, 724, 56612, 1536
+		0, 0, 724, 1046
 	};
 	memcpy(&buf[offset], &stream_header, sizeof(AVISTREAMHEADER));
 	offset += sizeof(AVISTREAMHEADER);
